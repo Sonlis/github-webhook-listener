@@ -7,7 +7,6 @@ import (
 	"github.com/Sonlis/github-webhook-listener/internal/config"
 	"github.com/Sonlis/github-webhook-listener/internal/applyChanges"
 	"log"
-	"os"
 	"net/http"
 	"encoding/json"
 )
@@ -16,7 +15,7 @@ func HandleRequest(c *gin.Context) {
 	configuration := config.NewConfig()
 	var reference Reference
 	hook := new(checkSignature.Hook)
-	secret := []byte(os.Getenv("GITHUB_SIGNATURE"))
+	secret := []byte(configuration.GitHookSecret)
 	hook, err := checkSignature.Parse(secret, c.Request)
 	if err != nil {
 		log.Println("Wrong signature")
