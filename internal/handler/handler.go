@@ -1,14 +1,14 @@
-package handler 
+package handler
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/Sonlis/github-webhook-listener/internal/checkSignature"
-	"github.com/Sonlis/github-webhook-listener/internal/repoSynchronizer"
-	"github.com/Sonlis/github-webhook-listener/internal/config"
+	"encoding/json"
 	"github.com/Sonlis/github-webhook-listener/internal/applyChanges"
+	"github.com/Sonlis/github-webhook-listener/internal/checkSignature"
+	"github.com/Sonlis/github-webhook-listener/internal/config"
+	"github.com/Sonlis/github-webhook-listener/internal/repoSynchronizer"
+	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
-	"encoding/json"
 )
 
 func HandleRequest(c *gin.Context) {
@@ -33,7 +33,7 @@ func HandleRequest(c *gin.Context) {
 
 	c.Writer.WriteHeader(200)
 
-	if err = repoSynchronizer.PullRepo(configuration.GitPath); err != nil {
+	if err = repoSynchronizer.PullRepo(configuration); err != nil {
 		log.Printf("Error pulling the repository: %v", err)
 	}
 
@@ -41,13 +41,8 @@ func HandleRequest(c *gin.Context) {
 		log.Printf("Error applying changes: %v", err)
 	}
 
-
-
-
-
 }
 
 type Reference struct {
 	Ref string `json:"ref"`
 }
-

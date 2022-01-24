@@ -10,7 +10,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
-
 )
 
 // Hook is an inbound github webhook
@@ -36,7 +35,6 @@ type Hook struct {
 	//
 	// Payload is extracted from the JSON-formatted body of the inbound request.
 	Payload []byte
-
 }
 
 const signaturePrefix = "sha1="
