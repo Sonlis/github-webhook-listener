@@ -8,7 +8,8 @@ func NewConfig() (config Config) {
 		GitPath:       os.Getenv("GITHUB_PATH"),
 		GitToken:      os.Getenv("GITHUB_TOKEN"),
 		GitHookSecret: os.Getenv("GITHUB_HOOK_SECRET"),
-		GitUsername:   "Sonlis",
+		GitUsername:   os.Getenv("GITHUB_USERNAME"),
+		sideServer:    os.Getenv("SIDE_SERVER"),
 	}
 	return config
 }
