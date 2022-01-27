@@ -47,8 +47,7 @@ func HandleRequestPrivate(c *gin.Context) {
 
 }
 
-
-HandleRequestPublic(c *gin.Context) {
+func HandleRequestPublic(c *gin.Context) {
 	configuration := config.NewConfig()
 
 	if err = repoSynchronizer.PullRepo(configuration); err != nil {

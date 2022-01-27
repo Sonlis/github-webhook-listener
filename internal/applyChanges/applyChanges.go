@@ -1,9 +1,9 @@
 package applyChanges
 
 import (
-	"os/exec"
-	"net/http"
 	"log"
+	"net/http"
+	"os/exec"
 )
 
 func ApplyChanges() (err error) {
