@@ -22,4 +22,6 @@ type Config struct {
 	GitHookSecret string //Secret to authenticate github hooks
 
 	GitUsername string
+
+	sideServer string
 }

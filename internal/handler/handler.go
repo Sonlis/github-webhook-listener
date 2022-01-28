@@ -50,10 +50,10 @@ func HandleRequestPrivate(c *gin.Context) {
 func HandleRequestPublic(c *gin.Context) {
 	configuration := config.NewConfig()
 
-	if err = repoSynchronizer.PullRepo(configuration); err != nil {
+	if err := repoSynchronizer.PullRepo(configuration); err != nil {
 		log.Printf("Error pulling the repository: %v", err)
 	}
-	if err = applyChanges.ApplyChanges(); err != nil {
+	if err := applyChanges.ApplyChanges(); err != nil {
 		log.Printf("Error applying changes: %v", err)
 	}
 	c.Writer.WriteHeader(200)
