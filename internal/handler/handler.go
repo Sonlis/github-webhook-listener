@@ -17,10 +17,14 @@ type Reference struct {
 
 func HandleRequestPrivate(c *gin.Context) {
 	configuration := config.NewConfig()
+	_, err := http.Get(configuration.SideServer)
+	if err != nil {
+		log.Println(err)
+	}
 	var reference Reference
 	hook := new(checkSignature.Hook)
 	secret := []byte(configuration.GitHookSecret)
-	hook, err := checkSignature.Parse(secret, c.Request)
+	hook, err = checkSignature.Parse(secret, c.Request)
 	if err != nil {
 		log.Println("Wrong signature")
 		c.JSON(http.StatusBadRequest, gin.H{"error": "wrong signature"})
