@@ -7,7 +7,7 @@ import (
 )
 
 func ApplyChanges() (err error) {
-	resp, err := http.Get("http://192.168.0.150:9292")
+	_, err = http.Get("http://192.168.0.150:9292")
 	if err != nil {
 		log.Println(err)
 	}
