@@ -20,8 +20,10 @@ func main() {
 
 	router := gin.Default()
 	if os.Args[1] == "public" {
+		log.Println("Started server for public raspberry")
 		router.GET("/github-webhook", handler.HandleRequestPublic)
 	} else if os.Args[1] == "private" {
+		log.Println("Started server for private raspberry")
 		router.POST("/github-webhook", handler.HandleRequestPrivate)
 	}
 	router.Run(":9292")
