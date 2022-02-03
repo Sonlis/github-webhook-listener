@@ -19,9 +19,9 @@ func main() {
 	}
 
 	router := gin.Default()
-	if os.Args[0] == "public" {
+	if os.Args[1] == "public" {
 		router.GET("/github-webhook", handler.HandleRequestPublic)
-	} else if os.Args[0] == "private" {
+	} else if os.Args[1] == "private" {
 		router.POST("/github-webhook", handler.HandleRequestPrivate)
 	}
 	router.Run(":9292")
