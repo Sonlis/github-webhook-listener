@@ -3,9 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"github.com/Sonlis/github-webhook-listener/internal/applyChanges"
-	"github.com/Sonlis/github-webhook-listener/internal/checkSignature"
 	"github.com/Sonlis/github-webhook-listener/internal/config"
-	"github.com/Sonlis/github-webhook-listener/internal/repoSynchronizer"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -22,9 +20,9 @@ func HandleRequestPrivate(c *gin.Context) {
 		log.Println(err)
 	}
 	var reference Reference
-	hook := new(checkSignature.Hook)
+	hook := new(applyChanges.Hook)
 	secret := []byte(configuration.GitHookSecret)
-	hook, err = checkSignature.Parse(secret, c.Request)
+	hook, err = applyChanges.Parse(secret, c.Request)
 	if err != nil {
 		log.Println("Wrong signature")
 		c.JSON(http.StatusBadRequest, gin.H{"error": "wrong signature"})
@@ -41,7 +39,7 @@ func HandleRequestPrivate(c *gin.Context) {
 
 	c.Writer.WriteHeader(200)
 
-	if err = repoSynchronizer.PullRepo(configuration); err != nil {
+	if err = applyChanges.PullRepo(configuration); err != nil {
 		log.Printf("Error pulling the repository: %v", err)
 	}
 
@@ -54,7 +52,7 @@ func HandleRequestPrivate(c *gin.Context) {
 func HandleRequestPublic(c *gin.Context) {
 	configuration := config.NewConfig()
 
-	if err := repoSynchronizer.PullRepo(configuration); err != nil {
+	if err := applyChanges.PullRepo(configuration); err != nil {
 		log.Printf("Error pulling the repository: %v", err)
 	}
 	if err := applyChanges.ApplyChanges(); err != nil {
